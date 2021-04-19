@@ -4,17 +4,12 @@ var gImgs = [];
 var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
-    lines: [{
-        txt: 'I never eat Falafel',
-        size: 20,
-        align: 'left',
-        color: 'red'
-    }]
+    lines: []
 }
 
 
 function createImgs() {
-    for (var i = 0; i < 18; i++) {
+    for (var i = 0; i < 19; i++) {
         gImgs.push({ id: i + 1, url: `img/meme-imgs/${i+1}.jpg` })
     }
     gImgs[0].keywords = ['politics']
@@ -35,9 +30,33 @@ function createImgs() {
     gImgs[15].keywords = ['funny']
     gImgs[16].keywords = ['explain', 'serious', 'politics']
     gImgs[17].keywords = ['funny', 'explain']
+    gImgs[18].keywords = ['funny', 'explain']
 
 }
 
 function getImgs() {
     return gImgs;
+}
+
+function getCurrMeme() {
+    return gMeme;
+}
+
+function addNewLine(txt = 'Add Text Here', x = gCanvas.width / 2, y, size = gCanvas.height / 10, align = 'center', color = 'white') {
+
+    gMeme.lines.push({
+        txt,
+        size,
+        align,
+        color,
+        isDragging: false,
+        pos: { x, y }
+
+    })
+    var length = gMeme.lines.length;
+    debugger
+    if (gMeme.lines.length === 1) gMeme.lines[length - 1].pos.y = gCanvas.height / 6;
+    else if (gMeme.lines.length === 2) gMeme.lines[length - 1].pos.y = gCanvas.height - gCanvas.height / 6
+    else if (gMeme.lines.length === 3) gMeme.lines[length - 1].pos.y = gCanvas.height / 2
+    else gMeme.lines[length - 1].pos.y = gMeme.lines[length - 2].pos.y + size;
 }

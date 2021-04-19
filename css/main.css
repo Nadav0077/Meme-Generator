@@ -13,6 +13,28 @@ footer {
     background-color: #167bff;
 }
 
+body {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    background-color: #f1f8ff;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    justify-content: center;
+}
+
+.canvas-container {
+    width: 60vw;
+    height: 80vh;
+}
+
+@media screen and (max-width: 500px) {
+    .canvas-container {
+        width: 80vw;
+    }
+}
+
 .gallery-meme {
     height: 200px;
     cursor: pointer;
@@ -31,4 +53,16 @@ footer {
     background-color: red;
 }
 
-.meme-editor-container {}
+.meme-editor-container {
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "canvas editor";
+    display: none;
+}
+
+#canvas {
+    grid-area: canvas;
+}
+
+.editor {
+    grid-area: editor;
+}
