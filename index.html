@@ -5,11 +5,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Memes Generator</title>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body>
+<body onload="onInit()">
+    <div class="grid-container">
 
+        <nav></nav>
+
+        <main>
+
+            <div class="memes-container">
+
+            </div>
+
+            <div class="meme-editor-container">
+                <canvas id="canvas" height="400" width="400" style="border: 1px solid black;"></canvas>
+            </div>
+        </main>
+
+        <footer></footer>
+
+
+    </div>
+    <script src="js/service/meme-service.js"></script>
+    <script src="js/meme-controller.js"></script>
 </body>
 
 </html>

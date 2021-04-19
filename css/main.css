@@ -1,0 +1,34 @@
+nav {
+    grid-area: nav;
+    background-color: #d822f0;
+}
+
+main {
+    grid-area: main;
+    background-color: #9896f1;
+}
+
+footer {
+    grid-area: footer;
+    background-color: #167bff;
+}
+
+.gallery-meme {
+    height: 200px;
+    cursor: pointer;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 4fr 1fr;
+    grid-template-areas: "nav nav nav" "main   main   main" "footer footer footer";
+    gap: 10px 20px;
+}
+
+.meme-editor-container {
+    display: none;
+    background-color: red;
+}
+
+.meme-editor-container {}
