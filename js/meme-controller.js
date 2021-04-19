@@ -32,27 +32,132 @@ function onOpenEditor(idx, elImg) {
 }
 
 function drawImgOnCanvas(idx, height, width) {
-    gCanvas.height = height * 1.25
-    gCanvas.width = width * 1.25
+
     var img = new Image()
     img.src = getImgs()[idx].url;
     img.onload = () => {
+        gCanvas.height = img.height
+        gCanvas.width = img.width
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
     }
+
 }
 
 function onAddText() {
     var text = document.querySelector('input[name=textLine]').value
     addNewLine(text)
     gCurrLine = getCurrMeme().lines[getCurrMeme().lines.length - 1]
-    gCtx.lineWidth = 2
-    gCtx.strokeStyle = 'red'
-    gCtx.fillStyle = gCurrLine.color
-    gCtx.font = `${gCurrLine.size}px Impact`
-    gCtx.textAlign = gCurrLine.align
-    gCtx.fillText(text, gCurrLine.pos.x, gCurrLine.pos.y)
-    gCtx.strokeText(text, gCurrLine.pos.x, gCurrLine.pos.y)
+    drawText(gCurrLine);
+    onSwitchLine();
 }
+
+
+
+function drawText(line) {
+    var text = line.txt;
+    gCtx.lineWidth = 2
+    gCtx.strokeStyle = line.color
+    gCtx.fillStyle = 'white'
+    gCtx.font = `${line.size}px Impact`
+    gCtx.textAlign = line.align
+    gCtx.fillText(text, line.pos.x, line.pos.y)
+    gCtx.strokeText(text, line.pos.x, line.pos.y)
+}
+
+function renderCanvas() {
+    drawImgOnCanvas(getCurrMeme().selectedImgId, gCanvas.height, gCanvas.width);
+    setTimeout(() => {
+        console.log(getCurrMeme().lines)
+        getCurrMeme().lines.forEach(line => drawText(line))
+    }, 100);
+
+}
+
+function currLine() {
+    var lines = getCurrMeme().lines
+    lines.forEach(line => {
+        if (lines[getCurrMeme().selectedLineIdx] === line) {
+            line.color = 'red';
+            gCurrLine = line
+        } else line.color = 'black';
+    })
+    renderCanvas()
+}
+
+function onSwitchLine() {
+    var lines = getCurrMeme().lines
+    getCurrMeme().selectedLineIdx = (getCurrMeme().selectedLineIdx === lines.length - 1) ? 0 : getCurrMeme().selectedLineIdx + 1
+    currLine();
+}
+
+function onIncY() {
+    getCurrMeme().lines[getCurrMeme().selectedLineIdx].pos.y += 10
+    renderCanvas();
+}
+
+function onDecY() {
+    getCurrMeme().lines[getCurrMeme().selectedLineIdx].pos.y -= 10
+    renderCanvas();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function addListeners() {
     addMouseListeners()
@@ -100,7 +205,7 @@ function onMove(ev) {
 
 function onUp() {
     gCurrLine.isDragging = false
-    document.body.style.cursor = 'grab'
+    document.body.style.cursor = 'auto'
 }
 
 function resizeCanvas() {
@@ -142,12 +247,12 @@ function drawArc(x, y, size = 60, color = 'blue') {
 
 }
 
-function renderCanvas() {
-    gCtx.save()
-    gCtx.fillRect(0, 0, gCanvas.width, gCanvas.height)
-    gCtx.restore()
-    if (gCurrLine) renderCircle()
-}
+// function renderCanvas() {
+//     gCtx.save()
+//     gCtx.fillRect(0, 0, gCanvas.width, gCanvas.height)
+//     gCtx.restore()
+//     if (gCurrLine) renderCircle()
+// }
 
 function renderCircle() {
     const { pos, color, size } = gCurrLine
