@@ -25,11 +25,16 @@
 
                     <canvas id="canvas" height="200" width="200" style="border: 1px solid black;"></canvas>
                 </div>
-                <div class="editor">
+                <div class="editor-container">
                     <input type="text" name="textLine"> <button class="text-add" onclick="onAddText()">Add!</button>
                     <button class="switch-lines" onclick="onSwitchLine()">switch</button>
-                    <button class="inc-y" onclick="onIncY()">+</button>
-                    <button class="dec-y" onclick="onDecY()">-</button>
+                    <button class="icon inc-y" onclick="onIncY()">+</button>
+                    <button class="icon dec-y" onclick="onDecY()">-</button>
+                    <button class="icon trash" onclick="onClear()"></button>
+                    <button class="icon align-to-left" onclick="onAlign('left')"></button>
+                    <button class="icon align-to-center" onclick="onAlign('center')"></button>
+                    <button class="icon align-to-right" onclick="onAlign('right')"></button>
+                    <a href="#" class="btn" onclick="downloadImg(this)" download="my-meme.jpg">Download as jpeg</a>
                 </div>
             </div>
         </main>

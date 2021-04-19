@@ -15,11 +15,6 @@ footer {
 
 body {}
 
-.canvas-container {
-    grid-area: canvas;
-    margin: 0;
-}
-
 @media screen and (max-width: 500px) {
     .canvas-container {
         width: 80vw;
@@ -39,18 +34,44 @@ body {}
     gap: 10px 20px;
 }
 
-.meme-editor-container {
-    display: none;
-    background-color: red;
+.meme-editor-contanier {
+    display: grid;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    gap: 0px 0px;
+    grid-template-areas: ". . . . . . . . . ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". . . . . . . . . ." ". . . . . . . . . ." ". . . . . . . . . .";
 }
 
-.meme-editor-container {
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: "canvas editor";
-    display: none;
+.canvas-container {
+    grid-area: canvas-container;
 }
 
-.editor {
-    margin: 0;
-    grid-area: editor;
+.editor-container {
+    grid-area: editor-container;
+}
+
+.icon {
+    height: 50px;
+    width: 50px;
+    background-color: rgba(255, 255, 255, 0.507);
+    border: none;
+    border-radius: 11px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.trash {
+    background-image: url('../img/icons/trash.png');
+}
+
+.align-to-left {
+    background-image: url('../img/icons/align-to-left.png');
+}
+
+.align-to-right {
+    background-image: url('../img/icons/align-to-right.png');
+}
+
+.align-to-center {
+    background-image: url('../img/icons/center-text-alignment.png');
 }

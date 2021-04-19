@@ -7,13 +7,14 @@ const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
 var gCurrLine
 
 
+
 function onInit() {
     gCanvas = document.querySelector('#canvas');
     gCtx = gCanvas.getContext('2d');
     createImgs();
     renderMemes()
-        // addListeners()
-        // renderCanvas()
+    addListeners()
+    renderCanvas()
 }
 
 function renderMemes() {
@@ -69,7 +70,7 @@ function renderCanvas() {
     setTimeout(() => {
         console.log(getCurrMeme().lines)
         getCurrMeme().lines.forEach(line => drawText(line))
-    }, 100);
+    }, 50);
 
 }
 
@@ -99,62 +100,6 @@ function onDecY() {
     getCurrMeme().lines[getCurrMeme().selectedLineIdx].pos.y -= 10
     renderCanvas();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -236,25 +181,24 @@ function isTextlicked(clickedPos) {
     return distance <= gCurrLine.size
 }
 
-function drawArc(x, y, size = 60, color = 'blue') {
-    gCtx.beginPath()
-    gCtx.lineWidth = '6'
-    gCtx.arc(x, y, size, 0, 2 * Math.PI)
-    gCtx.strokeStyle = 'white'
-    gCtx.stroke()
-    gCtx.fillStyle = color
-    gCtx.fill()
+function downloadImg(elLink) {
+    var lines = getCurrMeme().lines
+    lines.forEach(line => line.color = 'black')
+    renderCanvas()
+    setInterval(() => {
+        var imgContent = gCanvas.toDataURL('image/jpeg')
+        elLink.href = imgContent
 
+    }, 100);
 }
 
-// function renderCanvas() {
-//     gCtx.save()
-//     gCtx.fillRect(0, 0, gCanvas.width, gCanvas.height)
-//     gCtx.restore()
-//     if (gCurrLine) renderCircle()
-// }
+function onClear() {
+    getCurrMeme().selectedLineIdx = 0;
+    getCurrMeme().lines = [];
+    renderCanvas();
+}
 
-function renderCircle() {
-    const { pos, color, size } = gCurrLine
-    drawArc(pos.x, pos.y, size, color)
+function onAlign(align) {
+    gCurrLine.align = align
+    renderCanvas();
 }
