@@ -15,6 +15,7 @@ function onInit() {
     renderMemes()
     addListeners()
     renderCanvas()
+    renderKeyWords();
 }
 
 function renderMemes() {
@@ -59,7 +60,7 @@ function drawText(line) {
     gCtx.lineWidth = 2
     gCtx.strokeStyle = line.color
     gCtx.fillStyle = 'white'
-    gCtx.font = `${line.size}px Impact`
+    gCtx.font = `${line.size}px ${line.fontFam}`
     gCtx.textAlign = line.align
     gCtx.fillText(text, line.pos.x, line.pos.y)
     gCtx.strokeText(text, line.pos.x, line.pos.y)
@@ -201,4 +202,42 @@ function onClear() {
 function onAlign(align) {
     gCurrLine.align = align
     renderCanvas();
+}
+
+function onChangeFontSize(size) {
+    gCurrLine.size += size
+    renderCanvas();
+}
+
+function onChangeFontFamily(fontFam) {
+    gCurrLine.fontFam = fontFam
+    renderCanvas();
+}
+
+function onChangeTxt(ev, txt) {
+    var meme = getCurrMeme()
+    if (ev.code === 'Enter') {
+        if (txt === '' || !txt) meme.lines.splice(meme.selectedLineIdx, 1)
+        else gCurrLine.txt = txt;
+    }
+    renderCanvas();
+}
+
+function renderKeyWords() {
+    var strHtml = ''
+    var keywords = getKeywords();
+    for (const keyword in keywords) {
+        strHtml += `<a href="#" onclick="onIncKeyword(this)" data-keyword="${keyword}" style="font-size: ${keywords[keyword]*20}%;">${keyword}</a>`
+
+    }
+
+    document.querySelector('.keywords-container').innerHTML = strHtml
+}
+
+function onIncKeyword(elKeyword) {
+    console.log(elKeyword)
+    var keyword = elKeyword.dataset.keyword
+    getKeywords()[keyword]++;
+    console.log(getKeywords())
+    renderKeyWords()
 }

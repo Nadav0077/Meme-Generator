@@ -1,5 +1,7 @@
 'use strict'
 
+
+var gKeywords;
 var gImgs = [];
 var gMeme = {
     selectedImgId: 5,
@@ -30,7 +32,9 @@ function createImgs() {
     gImgs[15].keywords = ['funny']
     gImgs[16].keywords = ['explain', 'serious', 'politics']
     gImgs[17].keywords = ['funny', 'explain']
-    gImgs[18].keywords = ['funny', 'explain']
+    gImgs[18].keywords = ['cute']
+
+    createKeywordsMap();
 
 }
 
@@ -50,11 +54,11 @@ function addNewLine(txt = 'Add Text Here', x = gCanvas.width / 2, y, size = gCan
         align,
         color,
         isDragging: false,
-        pos: { x, y }
+        pos: { x, y },
+        fontFam: 'Impact'
 
     })
     var length = gMeme.lines.length;
-    debugger
     if (gMeme.lines.length === 1) gMeme.lines[length - 1].pos.y = gCanvas.height / 6;
     else if (gMeme.lines.length === 2) gMeme.lines[length - 1].pos.y = gCanvas.height - gCanvas.height / 6
     else if (gMeme.lines.length === 3) gMeme.lines[length - 1].pos.y = gCanvas.height / 2
@@ -63,4 +67,19 @@ function addNewLine(txt = 'Add Text Here', x = gCanvas.width / 2, y, size = gCan
 
 function getCurrLine() {
     return gMeme.lines[gMeme.selectedLineIdx];
+}
+
+function createKeywordsMap() {
+    var keywordsMap = {}
+    gImgs.forEach(img => {
+        img.keywords.forEach(keyword => {
+            if (!keywordsMap[keyword]) keywordsMap[keyword] = 1;
+        });
+    });
+    console.log('keywordsMap', keywordsMap);
+    gKeywords = keywordsMap;
+}
+
+function getKeywords() {
+    return gKeywords;
 }

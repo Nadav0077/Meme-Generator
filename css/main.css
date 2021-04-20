@@ -1,19 +1,21 @@
 nav {
     grid-area: nav;
-    background-color: #d822f0;
+    background-color: #ff7f00;
 }
 
 main {
     grid-area: main;
-    background-color: #9896f1;
+    background-color: #e3e3e3;
 }
 
 footer {
     grid-area: footer;
-    background-color: #167bff;
+    background-color: #ff7f00
 }
 
-body {}
+body {
+    background-color: #ffffff
+}
 
 @media screen and (max-width: 500px) {
     .canvas-container {
@@ -31,11 +33,10 @@ body {}
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 20fr 1fr;
     grid-template-areas: "nav nav nav" "main   main   main" "footer footer footer";
-    gap: 10px 20px;
 }
 
 .meme-editor-contanier {
-    display: grid;
+    display: none;
     grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
     grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
     gap: 0px 0px;
@@ -46,7 +47,7 @@ body {}
     grid-area: canvas-container;
 }
 
-.editor-container {
+.editor-tools-container {
     grid-area: editor-container;
 }
 
@@ -74,4 +75,20 @@ body {}
 
 .align-to-center {
     background-image: url('../img/icons/center-text-alignment.png');
+}
+
+.text-add {
+    background-image: url('../img/icons/add.png');
+}
+
+.switch-lines {
+    background-image: url('../img/icons/up-and-down-opposite-double-arrows-side-by-side.png');
+}
+
+.inc-font {
+    background-image: url('../img/icons/increase\ font\ -\ icon.png');
+}
+
+.dec-font {
+    background-image: url('../img/icons/decrease\ font\ -\ icon.png');
 }
