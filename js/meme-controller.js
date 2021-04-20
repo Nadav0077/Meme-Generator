@@ -1,5 +1,6 @@
 'use strict'
 
+
 var gCanvas;
 var gCtx;
 var gStartPos
@@ -19,18 +20,31 @@ function onInit() {
 }
 
 function renderMemes() {
-    document.querySelector('.memes-container').innerHTML = getImgs().map((img, idx) => {
-        return ` <img src="${img.url}" class="gallery-meme" onclick="onOpenEditor(${idx},this)">`
-    }).join('');
+    document.querySelector('.memes-container').innerHTML =
+        (!gIsShowSaved) ?
+        getImgsToShow().map((img) => {
+            return ` <img src="${img.url}" class="gallery-meme" onclick="onOpenEditor(${img.id-1},this,'${img.url}')">`
+        }).join('') :
+
+        getImgsToShow().map((img) => {
+            return ` <img src="${img.imgContent}" class="gallery-meme" onclick="onOpenEditor(${img.meme.selectedImgId},this,'${img.meme.url}',${img.meme})">`
+        }).join('')
 }
 
-function onOpenEditor(idx, elImg) {
-    getCurrMeme().selectedImgId = idx;
-    getCurrMeme().lines = [];
-    console.log(elImg.style.height, elImg.style.width)
+function onOpenEditor(idx, elImg, url, meme) {
+    if (gIsShowSaved) {
+        gMeme = meme
+        renderCanvas();
+    } else {
+        getCurrMeme().url = url
+        getCurrMeme().selectedImgId = idx;
+        getCurrMeme().lines = [];
+    }
     document.querySelector('.meme-editor-container').style.display = 'grid'
     document.querySelector('.memes-container').style.display = 'none'
-    drawImgOnCanvas(getCurrMeme().selectedImgId, elImg.height, elImg.width);
+    drawImgOnCanvas(idx, elImg.height, elImg.width);
+
+    console.log('url', url);
 }
 
 function drawImgOnCanvas(idx, height, width) {
@@ -69,7 +83,6 @@ function drawText(line) {
 function renderCanvas() {
     drawImgOnCanvas(getCurrMeme().selectedImgId, gCanvas.height, gCanvas.width);
     setTimeout(() => {
-        console.log(getCurrMeme().lines)
         getCurrMeme().lines.forEach(line => drawText(line))
     }, 50);
 
@@ -81,6 +94,7 @@ function currLine() {
         if (lines[getCurrMeme().selectedLineIdx] === line) {
             line.color = 'red';
             gCurrLine = line
+            document.querySelector('input[name=textLine]').value = line.txt;
         } else line.color = 'black';
     })
     renderCanvas()
@@ -186,11 +200,10 @@ function downloadImg(elLink) {
     var lines = getCurrMeme().lines
     lines.forEach(line => line.color = 'black')
     renderCanvas()
-    setInterval(() => {
+    setTimeout(() => {
         var imgContent = gCanvas.toDataURL('image/jpeg')
         elLink.href = imgContent
-
-    }, 100);
+    }, 1000);
 }
 
 function onClear() {
@@ -227,17 +240,59 @@ function renderKeyWords() {
     var strHtml = ''
     var keywords = getKeywords();
     for (const keyword in keywords) {
-        strHtml += `<a href="#" onclick="onIncKeyword(this)" data-keyword="${keyword}" style="font-size: ${keywords[keyword]*20}%;">${keyword}</a>`
+        strHtml += `<a href="#" class="keyword" onclick="onFilterImgs(this.dataset.keyword,this)" data-keyword="${keyword}" style="font-size:${keywords[keyword]+16}px">${keyword}</a>`
 
     }
 
     document.querySelector('.keywords-container').innerHTML = strHtml
 }
 
-function onIncKeyword(elKeyword) {
-    console.log(elKeyword)
-    var keyword = elKeyword.dataset.keyword
-    getKeywords()[keyword]++;
-    console.log(getKeywords())
-    renderKeyWords()
+
+function onAnimHamburger(x) {
+    x.classList.toggle("change");
+}
+
+
+let mainNav = document.getElementById('js-menu');
+let navBarToggle = document.getElementById('js-navbar-toggle');
+
+navBarToggle.addEventListener('click', function() {
+    mainNav.classList.toggle('active');
+});
+
+function onFilterImgs(keyword, elKeyword) {
+    setFilter(keyword)
+    incKeyWord(keyword)
+    renderKeyWords();
+    renderMemes();
+}
+
+function onSave() {
+    var lines = getCurrMeme().lines
+    lines.forEach(line => line.color = 'black')
+    renderCanvas()
+    setTimeout(() => saveImg(), 50)
+
+}
+
+function onOpenSaved() {
+    document.querySelector('.meme-editor-container').style.display = 'none'
+    gIsShowSaved = true;
+    renderMemes();
+}
+
+function onOpenGallery() {
+    gKeyword = ''
+    document.querySelector('.meme-editor-container').style.display = 'none'
+    document.querySelector('.memes-container').style.display = 'block'
+    gIsShowSaved = false;
+    renderMemes();
+}
+
+function base64_to_jpeg($base64_string, $output_file) {
+    $ifp = fopen($output_file, 'wb');
+    $data = explode(',', $base64_string);
+    fwrite($ifp, base64_decode($data[1]));
+    fclose($ifp);
+    return $output_file;
 }

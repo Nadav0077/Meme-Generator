@@ -1,6 +1,9 @@
 'use strict'
 
+var gKeyword;
 
+const KEY = 'savedMemes'
+var gSavedMemes = (loadFromStorage(KEY)) ? loadFromStorage(KEY) : []
 var gKeywords;
 var gImgs = [];
 var gMeme = {
@@ -9,6 +12,7 @@ var gMeme = {
     lines: []
 }
 
+var gIsShowSaved = false;
 
 function createImgs() {
     for (var i = 0; i < 19; i++) {
@@ -82,4 +86,34 @@ function createKeywordsMap() {
 
 function getKeywords() {
     return gKeywords;
+}
+
+function getImgsToShow() {
+    if (!gIsShowSaved) {
+        if (!gKeyword || gKeyword.length === 0) return gImgs;
+        return gImgs.filter(img => {
+            return img.keywords.some(keyword => {
+                console.log(keyword.substring(0, gKeyword.length) === gKeyword)
+                return keyword.substring(0, gKeyword.length) === gKeyword;
+            });
+        })
+    } else {
+        return (loadFromStorage(KEY)) ? loadFromStorage(KEY) : []
+    }
+}
+
+function setFilter(keyword) {
+    gKeyword = keyword;
+}
+
+function incKeyWord(keyword) {
+    if (!gKeywords[keyword]) return false
+    else gKeywords[keyword]++;
+    return true;
+}
+
+function saveImg() {
+    var imgContent = gCanvas.toDataURL('image/jpeg')
+    gSavedMemes.push({ meme: gMeme, imgContent })
+    saveToStorage(KEY, gSavedMemes)
 }

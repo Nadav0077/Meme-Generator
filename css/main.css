@@ -1,9 +1,51 @@
-nav {
-    grid-area: nav;
-    background-color: #ff7f00;
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+@font-face {
+    font-family: montserrat-reg;
+    src: url(../font/Montserrat-Regular.ttf);
+}
+
+@font-face {
+    font-family: montserrat-thin;
+    src: url(../font/Montserrat-Thin.ttf);
+}
+
+.hamburger {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: rgb(255, 255, 255);
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {
+    opacity: 0;
+}
+
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
 }
 
 main {
+    justify-items: center;
+    align-items: center;
     grid-area: main;
     background-color: #e3e3e3;
 }
@@ -14,7 +56,10 @@ footer {
 }
 
 body {
-    background-color: #ffffff
+    font-family: montserrat-reg;
+    margin: 0;
+    background-color: #ffffff;
+    font-size: .875rem;
 }
 
 @media screen and (max-width: 500px) {
@@ -29,13 +74,16 @@ body {
 }
 
 .grid-container {
+    /* justify-items: center; */
+    /* align-items: center; */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 20fr 1fr;
+    grid-template-rows: 1fr 12fr 3fr;
     grid-template-areas: "nav nav nav" "main   main   main" "footer footer footer";
+    min-height: 100vh;
 }
 
-.meme-editor-contanier {
+.meme-editor-container {
     display: none;
     grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
     grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
@@ -44,6 +92,7 @@ body {
 }
 
 .canvas-container {
+    margin: 10px;
     grid-area: canvas-container;
 }
 
@@ -91,4 +140,116 @@ body {
 
 .dec-font {
     background-image: url('../img/icons/decrease\ font\ -\ icon.png');
+}
+
+.logo {
+    background-image: url('../img/logo.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+
+/*..................................................*/
+
+.navbar {
+    font-size: 18px;
+    background-color: #ff7f00;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 10px;
+}
+
+.main-nav {
+    list-style-type: none;
+    display: none;
+}
+
+.nav-links {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.main-nav li {
+    text-align: center;
+    margin: 15px auto;
+}
+
+.logo {
+    display: inline-block;
+    font-size: 22px;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.navbar-toggle {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 24px;
+}
+
+.active {
+    display: block;
+}
+
+@media screen and (min-width: 768px) {
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 0;
+        height: 70px;
+        align-items: center;
+    }
+    .main-nav {
+        display: flex;
+        margin-right: 30px;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    .main-nav li {
+        margin: 0;
+    }
+    .nav-links {
+        margin-left: 40px;
+    }
+    .logo {
+        margin-top: 0;
+    }
+    .navbar-toggle {
+        display: none;
+    }
+    .logo:hover,
+    .nav-links:hover {
+        color: rgba(255, 255, 255, 1);
+    }
+}
+
+input[name=search] {
+    display: inline;
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[name=search]:focus {
+    width: 20%;
+}
+
+.keywords-container {
+    display: inline;
+}
+
+.keyword {
+    /* font-size: 16px; */
+    margin-left: 10px;
 }
