@@ -107,8 +107,10 @@ function currLine() {
 
 function onSwitchLine() {
     var lines = getCurrMeme().lines
-    getCurrMeme().selectedLineIdx = (getCurrMeme().selectedLineIdx === lines.length - 1) ? 0 : getCurrMeme().selectedLineIdx + 1
-    currLine();
+    if (lines.length !== 0) {
+        getCurrMeme().selectedLineIdx = (getCurrMeme().selectedLineIdx === lines.length - 1) ? 0 : getCurrMeme().selectedLineIdx + 1
+        currLine();
+    }
 }
 
 function onIncY() {

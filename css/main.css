@@ -88,7 +88,7 @@ body {
 
 .meme-editor-container {
     display: none;
-    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-columns: 0% 0% 10% 10% 10% 10% 10% 10% 10% 10%;
     grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
     gap: 30px 0px;
     grid-template-areas: ". . . . . . . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . . . . . . . . ."
@@ -245,7 +245,14 @@ body {
     input[name=search]:focus {
         width: 20%;
     }
+    /* .meme-editor-container {
+        display: none;
+        gap: 30px 0px;
+        grid-template-areas: ". . . . . . . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . . . . . . . . ."
+    } */
     .meme-editor-container {
+        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+        grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
         grid-gap: 0;
         grid-template-areas: ". . . . . . . . . ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". . . . . . . . . ." ". . . . . . . . . ." ". . . . . . . . . .";
     }
@@ -348,10 +355,10 @@ input:focus+label {
 /*-----------Canvas Editor---------*/
 
 .editor-tools-container {
+    align-items: center;
     grid-area: editor-container;
     flex: 1;
     display: grid;
-    grid-template-columns: 1% 30% 30% 30% 29% 0% 1%;
     grid-template-areas: ". text-input text-input text-input text-input text-input ." ". . switch-btn add-line-btn clear-canvas-btn . ." ". inc-font-size-btn dec-font-size-btn align-left-btn align-center-btn align-right-btn ." ". change-font-input change-font-input change-font-input change-border-btn change-font-color-btn ." ". stickers-container stickers-container stickers-container stickers-container stickers-container ." ". download-canvas download-canvas share-canvas share-canvas facebook-btn ." ". . . save-btn . . .";
 }
 
