@@ -147,7 +147,7 @@ function addTouchListeners() {
 
 function onDown(ev) {
     const pos = getEvPos(ev)
-    if (!isTextlicked(pos)) return
+    if (!isTextlicked(pos) || getCurrMeme().lines.length === 0) return
     gCurrLine.isDragging = true
     gStartPos = pos
     document.body.style.cursor = 'grabbing'
@@ -155,7 +155,7 @@ function onDown(ev) {
 }
 
 function onMove(ev) {
-    if (gCurrLine.isDragging) {
+    if (getCurrMeme().lines.length !== 0 && gCurrLine.isDragging) {
         const pos = getEvPos(ev)
         const dx = pos.x - gStartPos.x
         const dy = pos.y - gStartPos.y
@@ -232,10 +232,11 @@ function onChangeFontFamily(fontFam) {
 }
 
 function onChangeTxt(ev, txt) {
-    var meme = getCurrMeme()
     if (ev.code === 'Enter') {
-        if (txt === '' || !txt) meme.lines.splice(meme.selectedLineIdx, 1)
-        else gCurrLine.txt = txt;
+        if (txt === '' || !txt) {
+            removeLine();
+            currLine();
+        } else gCurrLine.txt = txt;
     }
     renderCanvas();
 }
@@ -287,13 +288,15 @@ function onOpenSaved() {
 }
 
 function onOpenGallery() {
-    gKeyword = ''
-    document.querySelector('.meme-editor-container').style.display = 'none'
-    document.querySelector('.filter-container').style.display = 'flex'
-    document.querySelector('.memes-container').style.display = 'block'
-    document.querySelector('input[name=imageUpload]').event = undefined
-    gIsShowSaved = false;
-    renderMemes();
+    // window.location(ur)
+    // gKeyword = ''
+    // document.querySelector('.meme-editor-container').style.display = 'none'
+    // document.querySelector('.filter-container').style.display = 'flex'
+    // document.querySelector('.memes-container').style.display = 'block'
+    // document.querySelector('input[name=imageUpload]').event = undefined
+    // gIsShowSaved = false;
+    location.reload();
+    // renderMemes();
 }
 
 function base64_to_jpeg($base64_string, $output_file) {
@@ -353,7 +356,6 @@ function onImgInput(ev) {
 }
 
 function loadImageFromInput(ev) {
-    debugger
     var reader = new FileReader()
 
     reader.onload = function(event) {

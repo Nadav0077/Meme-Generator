@@ -1,17 +1,18 @@
 'use strict'
 var gIsShowSaved = false;
 
-var gKeyword;
 
-const KEY = 'savedMemes'
-var gSavedMemes = (loadFromStorage(KEY)) ? loadFromStorage(KEY) : []
-var gKeywords;
+const KEYwords = 'savedKeywords'
+const KEYmemes = 'savedMemes'
 var gImgs = [];
 var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
     lines: []
 }
+var gSavedMemes = (loadFromStorage(KEYmemes)) ? loadFromStorage(KEYmemes) : []
+var gKeywords;
+var gKeyword
 
 
 function createImgs() {
@@ -42,7 +43,7 @@ function createImgs() {
     gImgs[21].keywords = ['happy']
     gImgs[22].keywords = ['mad']
 
-    createKeywordsMap();
+    gKeywords = (loadFromStorage(KEYwords)) ? loadFromStorage(KEYwords) : createKeywordsMap();
 
 }
 
@@ -52,6 +53,11 @@ function getImgs() {
 
 function getCurrMeme() {
     return gMeme;
+}
+
+function removeLine() {
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+    gMeme.selectedLineIdx--;
 }
 
 function addNewLine(txt = 'Add Text Here', x = gCanvas.width / 2, y, size = gCanvas.height / 10, align = 'center', color = 'black') {
@@ -84,7 +90,8 @@ function createKeywordsMap() {
             if (!keywordsMap[keyword]) keywordsMap[keyword] = 1;
         });
     });
-    gKeywords = keywordsMap;
+    saveToStorage(KEYwords, keywordsMap)
+    return keywordsMap;
 }
 
 function getKeywords() {
@@ -100,7 +107,7 @@ function getImgsToShow() {
             });
         })
     } else {
-        return (loadFromStorage(KEY)) ? loadFromStorage(KEY) : []
+        return (loadFromStorage(KEYmemes)) ? loadFromStorage(KEYmemes) : []
     }
 }
 
@@ -111,11 +118,12 @@ function setFilter(keyword) {
 function incKeyWord(keyword) {
     if (!gKeywords[keyword]) return false
     else gKeywords[keyword]++;
+    saveToStorage(KEYwords, gKeywords)
     return true;
 }
 
 function saveImg() {
     var imgContent = gCanvas.toDataURL('image/jpeg')
     gSavedMemes.push({ meme: gMeme, imgContent })
-    saveToStorage(KEY, gSavedMemes)
+    saveToStorage(KEYmemes, gSavedMemes)
 }

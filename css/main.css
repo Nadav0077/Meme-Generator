@@ -51,8 +51,9 @@ main {
 }
 
 footer {
+    display: inline-block;
     grid-area: footer;
-    background-color: #ff7f00
+    background-color: #ff7f00;
 }
 
 body {
@@ -74,33 +75,41 @@ body {
 }
 
 .flex-container {
+    height: 100%;
     justify-content: center;
     align-content: center;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 12fr 3fr;
+    grid-template-rows: 12fr 1fr;
     grid-template-areas: "main   main   main" "footer footer footer";
     min-height: 100vh;
+    justify-content: space-around;
 }
 
 .meme-editor-container {
     display: none;
     grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
     grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
-    gap: 0px 0px;
-    grid-template-areas: ". . . . . . . . . ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". . . . . . . . . ." ". . . . . . . . . ." ". . . . . . . . . .";
+    gap: 30px 0px;
+    grid-template-areas: ". . . . . . . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . . . . . . . . ."
 }
 
+
+/* .meme-editor-container {
+    width: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+} */
+
 .canvas-container {
-    margin: 10px;
+    margin: 0;
+    flex: 1;
     grid-area: canvas-container;
 }
 
-.editor-tools-container {
-    grid-area: editor-container;
-}
-
 .icon {
+    display: block;
     height: 50px;
     width: 50px;
     background-color: rgba(255, 255, 255, 0.507);
@@ -109,10 +118,6 @@ body {
     background-repeat: no-repeat;
     background-size: contain;
     margin: 10px;
-}
-
-.trash {
-    background-image: url('../img/icons/trash.png');
 }
 
 .align-to-left {
@@ -125,14 +130,6 @@ body {
 
 .align-to-center {
     background-image: url('../img/icons/center-text-alignment.png');
-}
-
-.text-add {
-    background-image: url('../img/icons/add.png');
-}
-
-.switch-lines {
-    background-image: url('../img/icons/up-and-down-opposite-double-arrows-side-by-side.png');
 }
 
 .inc-font {
@@ -203,7 +200,15 @@ body {
     padding: 20px;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 852px) {
+    .canvas-container {
+        margin: 10px;
+        flex: 1;
+        grid-area: canvas-container;
+    }
+    .keywords-container {
+        padding-bottom: 0;
+    }
     .navbar {
         display: flex;
         justify-content: space-between;
@@ -240,6 +245,19 @@ body {
     input[name=search]:focus {
         width: 20%;
     }
+    .meme-editor-container {
+        grid-gap: 0;
+        grid-template-areas: ". . . . . . . . . ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". . . . . . . . . ." ". . . . . . . . . ." ". . . . . . . . . .";
+    }
+    .editor-tools-container {
+        grid-area: editor-container;
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1% 30% 30% 30% 29% 0% 1%;
+        grid-template-rows: 15% 15% 15% 15% 15% 15% 1%;
+        gap: 30px 0px;
+        grid-template-areas: ". text-input text-input text-input text-input text-input ." ". . switch-btn add-line-btn clear-canvas-btn . ." ". inc-font-size-btn dec-font-size-btn align-left-btn align-center-btn align-right-btn ." ". change-font-input change-font-input change-font-input change-border-btn change-font-color-btn ." ". stickers-container stickers-container stickers-container stickers-container stickers-container ." ". download-canvas download-canvas share-canvas share-canvas facebook-btn ." ". . . save-btn . . .";
+    }
 }
 
 input[name=search] {
@@ -264,6 +282,7 @@ input[name=search]:focus {
 }
 
 .keywords-container {
+    padding-bottom: 15px;
     display: inline;
     flex: 8;
     text-align: center;
@@ -323,4 +342,87 @@ input:focus+label {
     left: 10px;
     font-size: 0.85rem;
     color: #555;
+}
+
+
+/*-----------Canvas Editor---------*/
+
+.editor-tools-container {
+    grid-area: editor-container;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1% 30% 30% 30% 29% 0% 1%;
+    grid-template-areas: ". text-input text-input text-input text-input text-input ." ". . switch-btn add-line-btn clear-canvas-btn . ." ". inc-font-size-btn dec-font-size-btn align-left-btn align-center-btn align-right-btn ." ". change-font-input change-font-input change-font-input change-border-btn change-font-color-btn ." ". stickers-container stickers-container stickers-container stickers-container stickers-container ." ". download-canvas download-canvas share-canvas share-canvas facebook-btn ." ". . . save-btn . . .";
+}
+
+.text-input {
+    grid-area: text-input;
+    width: 80%;
+}
+
+.switch-btn {
+    grid-area: switch-btn;
+    background-image: url('../img/icons/up-and-down-opposite-double-arrows-side-by-side.png');
+}
+
+.add-line-btn {
+    grid-area: add-line-btn;
+    background-image: url('../img/icons/add.png');
+}
+
+.clear-canvas-btn {
+    grid-area: clear-canvas-btn;
+    background-image: url('../img/icons/trash.png');
+}
+
+.inc-font-size-btn {
+    grid-area: inc-font-size-btn;
+}
+
+.dec-font-size-btn {
+    grid-area: dec-font-size-btn;
+}
+
+.align-left-btn {
+    grid-area: align-left-btn;
+}
+
+.align-center-btn {
+    grid-area: align-center-btn;
+}
+
+.align-right-btn {
+    grid-area: align-right-btn;
+}
+
+.change-font-input {
+    grid-area: change-font-input;
+}
+
+.change-border-btn {
+    grid-area: change-border-btn;
+}
+
+.change-font-color-btn {
+    grid-area: change-font-color-btn;
+}
+
+.stickers-container {
+    grid-area: stickers-container;
+}
+
+.download-canvas {
+    grid-area: download-canvas;
+}
+
+.share-canvas {
+    grid-area: share-canvas;
+}
+
+.facebook-btn {
+    grid-area: facebook-btn;
+}
+
+.save-btn {
+    grid-area: save-btn;
 }
