@@ -10,6 +10,7 @@ var gCurrLine;
 
 
 function onInit() {
+    downloadFonts()
     animateFavicon();
     gCanvas = document.querySelector('#canvas');
     gCtx = gCanvas.getContext('2d');
@@ -369,4 +370,20 @@ function loadImageFromInput(ev) {
         img.src = event.target.result
     }
     reader.readAsDataURL(ev.target.files[0])
+}
+
+function downloadFonts() {
+    var el = document.querySelector('.font-download');
+    el.style.font = `0px Brush Script MT`
+    el.style.font = `0px Courier New`
+    el.style.font = `0px Garamond`
+    el.style.font = `0px Georgia`
+    el.style.font = `0px Times New Roman`
+    el.style.font = `0px Trebuchet`
+    el.style.font = `0px Tahoma`
+    el.style.font = `0px Helvetica`
+    el.style.font = `0px Verdana`
+    el.style.font = `0px Ariel`
+    el.style.font = `0px Impact`
+
 }
