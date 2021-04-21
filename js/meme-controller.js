@@ -12,6 +12,7 @@ var gCurrSticker;
 
 
 function onInit() {
+    navBar();
     downloadFonts()
     animateFavicon();
     gCanvas = document.querySelector('#canvas');
@@ -31,16 +32,19 @@ function renderMemes() {
         }).join('') :
 
         getImgsToShow().map((img) => {
-            return ` <img src="${img.imgContent}" data-meme="${JSON.stringify(img.meme).substring(0,-1)}" class="gallery-meme" onclick="onOpenEditor(${img.meme.selectedImgId},this,'${img.meme.url}')">`
+            console.log(JSON.stringify(img.meme))
+            return ` <img src="${img.imgContent}" class="gallery-meme" onclick='onOpenEditor(${img.meme.selectedImgId},this,'${img.meme.url}',${JSON.stringify(img.meme)})'>`
         }).join('')
 }
 
-function onOpenEditor(idx, elImg, url) {
+function onOpenEditor(idx, elImg, url, meme) {
+    console.log(elImg)
     renderStickers();
     if (gIsShowSaved) {
-        gMeme = JSON.parse(elImg.dataset.meme);
+        gMeme = JSON.parse(meme.meme);
+        console.log(gMeme)
         var img = new Image()
-        img.onload = renderCanvas.bind()
+        img.onload = renderCanvas()
         img.src = gMeme.url
 
     } else {
@@ -134,7 +138,6 @@ function addListeners() {
     addMouseListeners()
     addTouchListeners()
     window.addEventListener('resize', () => {
-        // resizeCanvas()
         renderCanvas()
     })
 }
@@ -179,11 +182,6 @@ function onUp() {
     document.body.style.cursor = 'auto'
 }
 
-function resizeCanvas() {
-    const elContainer = document.querySelector('.canvas-container')
-    gCanvas.width = elContainer.offsetWidth
-    gCanvas.height = elContainer.offsetHeight
-}
 
 function getEvPos(ev) {
     var pos = {
@@ -264,13 +262,15 @@ function onAnimHamburger(x) {
     x.classList.toggle("change");
 }
 
+function navBar() {
 
-let mainNav = document.getElementById('js-menu');
-let navBarToggle = document.getElementById('js-navbar-toggle');
+    let mainNav = document.getElementById('js-menu');
+    let navBarToggle = document.getElementById('js-navbar-toggle');
 
-navBarToggle.addEventListener('click', function() {
-    mainNav.classList.toggle('active');
-});
+    navBarToggle.addEventListener('click', function() {
+        mainNav.classList.toggle('active');
+    });
+}
 
 function onFilterImgs(keyword, elKeyword) {
     setFilter(keyword)
@@ -302,7 +302,7 @@ function onOpenGallery() {
 function animateFavicon() {
 
     var favicon_images = [],
-        image_counter = 0; // To keep track of the current image
+        image_counter = 0;
     for (var i = 0; i < 88; i++) {
         favicon_images.push(`img/favicon/frame_${i}_delay-0.25s.gif`)
     }
@@ -324,7 +324,6 @@ function animateFavicon() {
 function onShare() {
     var file = new File([gCanvas.toDataURL('image/jpeg')], "picture.jpg", { type: 'image/jpeg' });
     var filesArray = [file];
-    // const filesArray = [gCanvas.toDataURL('image/jpeg')];
     if (navigator.canShare && navigator.canShare({ files: filesArray })) {
         var lines = getCurrMeme().lines
         lines.forEach(line => line.StrokeColor = 'black')

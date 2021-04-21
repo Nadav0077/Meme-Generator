@@ -50,6 +50,23 @@ main {
     background-color: #e3e3e3;
 }
 
+.download-canvas {
+    background-color: #ff7f00;
+    color: white;
+    padding: 1em;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 80%;
+}
+
+.download-canvas:hover {
+    background-color: #555;
+}
+
+.download-canvas:active {
+    background-color: black;
+}
+
 footer {
     display: inline-block;
     grid-area: footer;
@@ -93,14 +110,6 @@ body {
     gap: 30px 0px;
     grid-template-areas: ". . . . . . . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . . . . . . . . ."
 }
-
-
-/* .meme-editor-container {
-    width: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-} */
 
 .canvas-container {
     margin: 0;
@@ -250,7 +259,6 @@ input[name=search]:focus {
 }
 
 .file-input label {
-    display: block;
     position: relative;
     width: 150px;
     height: 30px;
@@ -292,7 +300,7 @@ input:focus+label {
     grid-area: editor-container;
     flex: 1;
     display: grid;
-    grid-template-areas: ". text-input text-input text-input text-input text-input ." ". . switch-btn add-line-btn clear-canvas-btn . ." ". inc-font-size-btn dec-font-size-btn align-left-btn align-center-btn align-right-btn ." ". change-font-input change-font-input change-font-input change-border-btn change-font-color-btn ." ". stickers-container stickers-container stickers-container stickers-container stickers-container ." ". download-canvas download-canvas share-canvas share-canvas facebook-btn save-btn" ". . . . . . .";
+    grid-template-areas: ". text-input text-input text-input text-input text-input ." ". . switch-btn add-line-btn clear-canvas-btn . ." ". inc-font-size-btn dec-font-size-btn align-left-btn align-center-btn align-right-btn ." ". change-font-input change-font-input change-font-input change-border-btn change-font-color-btn ." ". stickers-container stickers-container stickers-container stickers-container stickers-container ." ". download-canvas download-canvas share-canvas share-canvas facebook-container save-btn" ". . . . . . .";
 }
 
 .text-input {
@@ -364,7 +372,11 @@ input:focus+label {
 }
 
 .facebook-btn {
-    grid-area: facebook-btn;
+    background-image: url(../img/icons/facebook-logo.png);
+}
+
+.facebook-container {
+    grid-area: facebook-container;
 }
 
 .save-btn {
@@ -441,11 +453,6 @@ input:focus+label {
     input[name=search]:focus {
         width: 20%;
     }
-    /* .meme-editor-container {
-        display: none;
-        gap: 30px 0px;
-        grid-template-areas: ". . . . . . . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . . . . . . . . ."
-    } */
     .meme-editor-container {
         grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
         grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
@@ -459,7 +466,7 @@ input:focus+label {
         grid-template-columns: 1% 30% 30% 30% 29% 0% 1%;
         grid-template-rows: 15% 15% 15% 15% 15% 15% 1%;
         gap: 30px 0px;
-        grid-template-areas: ". text-input text-input text-input text-input text-input ." ". . switch-btn add-line-btn clear-canvas-btn . ." ". inc-font-size-btn dec-font-size-btn align-left-btn align-center-btn align-right-btn ." ". change-font-input change-font-input change-font-input change-border-btn change-font-color-btn ." ". stickers-container stickers-container stickers-container stickers-container stickers-container ." ". download-canvas download-canvas share-canvas share-canvas facebook-btn save-btn" ". . . . . . .";
+        grid-template-areas: ". text-input text-input text-input text-input text-input ." ". . switch-btn add-line-btn clear-canvas-btn . ." ". inc-font-size-btn dec-font-size-btn align-left-btn align-center-btn align-right-btn ." ". change-font-input change-font-input change-font-input change-border-btn change-font-color-btn ." ". stickers-container stickers-container stickers-container stickers-container stickers-container ." ". download-canvas download-canvas share-canvas share-canvas facebook-container save-btn" ". . . . . . .";
     }
     .stickers-container {
         width: 120%;
