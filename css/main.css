@@ -450,3 +450,14 @@ input:focus+label {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+.stickers-container button {
+    font-size: 30px;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 20%;
+    border: none;
+}
+
+.sticker {
+    font-size: 40px;
+}

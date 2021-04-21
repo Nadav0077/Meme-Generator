@@ -1,11 +1,13 @@
 'use strict'
 
-
+var gCurrStickerNum = 128512;
 var gCanvas;
 var gCtx;
 var gStartPos
 const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
 var gCurrLine;
+var gIsInputSticker = false;
+var gCurrSticker;
 
 
 
@@ -34,6 +36,7 @@ function renderMemes() {
 }
 
 function onOpenEditor(idx, elImg, url) {
+    renderStickers();
     if (gIsShowSaved) {
         gMeme = JSON.parse(elImg.dataset.meme);
         var img = new Image()
@@ -66,7 +69,7 @@ function drawImgOnCanvas(idx, height, width) {
 }
 
 function onAddText() {
-    var text = document.querySelector('input[name=textLine]').value
+    var text = (gIsInputSticker) ? gCurrSticker : document.querySelector('input[name=textLine]').value;
     addNewLine(text)
     gCurrLine = getCurrMeme().lines[getCurrMeme().lines.length - 1]
     drawText(gCurrLine);
@@ -78,8 +81,8 @@ function onAddText() {
 function drawText(line) {
     var text = line.txt;
     gCtx.lineWidth = 2
-    gCtx.strokeStyle = line.color
-    gCtx.fillStyle = 'white'
+    gCtx.strokeStyle = line.StrokeColor
+    gCtx.fillStyle = line.color
     gCtx.font = `${line.size}px ${line.fontFam}`
     gCtx.textAlign = line.align
     gCtx.fillText(text, line.pos.x, line.pos.y)
@@ -98,10 +101,10 @@ function currLine() {
     var lines = getCurrMeme().lines
     lines.forEach(line => {
         if (lines[getCurrMeme().selectedLineIdx] === line) {
-            line.color = 'red';
+            line.StrokeColor = 'red';
             gCurrLine = line
             document.querySelector('input[name=textLine]').value = line.txt;
-        } else line.color = 'black';
+        } else line.StrokeColor = 'black';
     })
     renderCanvas()
 }
@@ -206,7 +209,7 @@ function isTextlicked(clickedPos) {
 
 function downloadImg(elLink) {
     var lines = getCurrMeme().lines
-    lines.forEach(line => line.color = 'black')
+    lines.forEach(line => line.StrokeColor = 'black')
     renderCanvas()
     var imgContent = gCanvas.toDataURL('image/jpeg')
     elLink.href = imgContent
@@ -277,7 +280,7 @@ function onFilterImgs(keyword, elKeyword) {
 
 function onSave() {
     var lines = getCurrMeme().lines
-    lines.forEach(line => line.color = 'black')
+    lines.forEach(line => line.StrokeColor = 'black')
     renderCanvas()
     setTimeout(() => saveImg(), 50)
 
@@ -338,7 +341,7 @@ function onShare() {
     // const filesArray = [gCanvas.toDataURL('image/jpeg')];
     if (navigator.canShare && navigator.canShare({ files: filesArray })) {
         var lines = getCurrMeme().lines
-        lines.forEach(line => line.color = 'black')
+        lines.forEach(line => line.StrokeColor = 'black')
         renderCanvas()
         setTimeout(() => navigator.share({
             files: filesArray,
@@ -387,4 +390,32 @@ function downloadFonts() {
     el.style.fontFamily = `Impact`
     console.log(el.style.fontFamily)
 
+}
+
+function renderStickers() {
+    var strHtml = ` <button onclick="onChangeStickersToShow(-5)">👈</button><button onclick="onChangeStickersToShow(+5)">👉</button>`;
+    var elContainer = document.querySelector('.stickers-container');
+    for (var i = gCurrStickerNum; i < gCurrStickerNum + 5; i++) {
+        strHtml += `<span class="sticker" data-sticker="&#${i}" onclick="onAddSticker(this.dataset.sticker)">&#${i}</span>`
+    }
+    elContainer.innerHTML = strHtml;
+}
+
+function onAddSticker(sticker) {
+    console.log(sticker)
+    gIsInputSticker = true
+    gCurrSticker = sticker
+    onAddText();
+    gIsInputSticker = false
+}
+
+function onChangeStickersToShow(num) {
+    gCurrStickerNum += num
+    renderStickers();
+}
+
+function onChangeFontColor(color) {
+    console.log(color)
+    setFontColor(color)
+    renderCanvas();
 }

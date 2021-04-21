@@ -1,5 +1,6 @@
 'use strict'
 var gIsShowSaved = false;
+var gCurrColor = '#FFFFFF'
 
 
 const KEYwords = 'savedKeywords'
@@ -60,16 +61,17 @@ function removeLine() {
     gMeme.selectedLineIdx--;
 }
 
-function addNewLine(txt = 'Add Text Here', x = gCanvas.width / 2, y, size = gCanvas.height / 10, align = 'center', color = 'black') {
+function addNewLine(txt = 'Add Text Here', x = gCanvas.width / 2, y, size = gCanvas.height / 10, align = 'center', strokeColor = 'black') {
 
     gMeme.lines.push({
         txt,
         size,
         align,
-        color,
+        strokeColor: strokeColor,
         isDragging: false,
         pos: { x, y },
-        fontFam: 'Impact'
+        fontFam: 'Impact',
+        color: gCurrColor
 
     })
     var length = gMeme.lines.length;
@@ -126,4 +128,8 @@ function saveImg() {
     var imgContent = gCanvas.toDataURL('image/jpeg')
     gSavedMemes.push({ meme: gMeme, imgContent })
     saveToStorage(KEYmemes, gSavedMemes)
+}
+
+function setFontColor(color) {
+    gCurrColor = color;
 }

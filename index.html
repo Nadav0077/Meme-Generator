@@ -72,9 +72,12 @@
                     <button class="icon align-to-right align-right-btn" onclick="onAlign('left')"></button>
                     <button class="icon inc-font inc-font-size-btn" onclick="onChangeFontSize(5)"></button>
                     <button class="icon dec-font dec-font-size-btn" onclick="onChangeFontSize(-5)"></button>
+                    <input class="icon change-font-color-btn" type="color" onclick="onChangeFontColor(this.value)">
                     <button class="icon save-btn" onclick="onSave()">Save</button>
                     <button class="icon share-canvas" onclick="onShare()">Share</button>
-                    <div class="stickers-container"></div>
+                    <div class="stickers-container">
+
+                    </div>
                     <select class="change-font-input" name="font-family" onchange="onChangeFontFamily(this.value)">
                            <option value="Impact">Impact</option>
                            <option value="Ariel">Ariel</option>
