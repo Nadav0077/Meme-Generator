@@ -89,7 +89,7 @@ body {
 .meme-editor-container {
     display: none;
     grid-template-columns: 0% 0% 10% 10% 10% 10% 10% 10% 10% 10%;
-    grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    /* grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10%; */
     gap: 30px 0px;
     grid-template-areas: ". . . . . . . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . . . . . . . . ."
 }
@@ -359,7 +359,7 @@ input:focus+label {
     grid-area: editor-container;
     flex: 1;
     display: grid;
-    grid-template-areas: ". text-input text-input text-input text-input text-input ." ". . switch-btn add-line-btn clear-canvas-btn . ." ". inc-font-size-btn dec-font-size-btn align-left-btn align-center-btn align-right-btn ." ". change-font-input change-font-input change-font-input change-border-btn change-font-color-btn ." ". stickers-container stickers-container stickers-container stickers-container stickers-container ." ". download-canvas download-canvas share-canvas share-canvas facebook-btn ." ". . . save-btn . . .";
+    grid-template-areas: ". text-input text-input text-input text-input text-input ." ". . switch-btn add-line-btn clear-canvas-btn . ." ". inc-font-size-btn dec-font-size-btn align-left-btn align-center-btn align-right-btn ." ". change-font-input change-font-input change-font-input change-border-btn change-font-color-btn ." ". stickers-container stickers-container stickers-container stickers-container stickers-container ." ". download-canvas download-canvas share-canvas share-canvas facebook-btn save-btn" ". . . . . . .";
 }
 
 .text-input {
