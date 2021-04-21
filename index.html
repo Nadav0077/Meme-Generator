@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memes Generator</title>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" href="img/favicon.gif" type="gif">
 </head>
 
 <body onload="onInit()">
@@ -32,67 +33,72 @@
 
         </ul>
     </nav>
-    <!-- <nav>
-            <div class="logo">
+    <div class="flex-container">
 
-         
+        <main>
+            <div class="filter-container">
 
-        </nav> -->
+                <input type="text" name="search" placeholder="Search.." onkeypress="onFilterImgs(this.value)">
+                <div class="keywords-container">
+                </div>
 
-    <main>
-        <div class="filter-container">
+                <div class="file-input">
+                    <input type="file" id="file" class="file input-img" name="imageUpload" onchange="onImgInput(event)">
+                    <label for="file">Select file</label>
+                </div>
 
-            <input type="text" name="search" placeholder="Search.." onkeypress="onFilterImgs(this.value)">
-            <div class="keywords-container">
+
+
+
+            </div>
+            <div class="memes-container">
+
             </div>
 
-        </div>
-        <div class="memes-container">
+            <div class="meme-editor-container">
 
-        </div>
-
-        <div class="meme-editor-container">
-
-            <div class="canvas-conatainer">
-                <canvas id="canvas" height="200" width="200" style="border: 1px solid black;"></canvas>
+                <div class="canvas-container">
+                    <canvas id="canvas" height="200" width="200" style="border: 1px solid black;"></canvas>
+                </div>
+                <div class="editor-tools-container">
+                    <input value="Enter Text" type="text" name="textLine" onkeypress="onChangeTxt(event, this.value)">
+                    <button class="icon text-add" onclick="onAddText()"></button>
+                    <button class="icon switch-lines" onclick="onSwitchLine()"></button>
+                    <button class="icon inc-y" onclick="onIncY()">+</button>
+                    <button class="icon dec-y" onclick="onDecY()">-</button>
+                    <button class="icon trash" onclick="onClear()"></button>
+                    <button class="icon align-to-left" onclick="onAlign('right')"></button>
+                    <button class="icon align-to-center" onclick="onAlign('center')"></button>
+                    <button class="icon align-to-right" onclick="onAlign('left')"></button>
+                    <button class="icon inc-font" onclick="onChangeFontSize(5)"></button>
+                    <button class="icon dec-font" onclick="onChangeFontSize(-5)"></button>
+                    <button class="icon save" onclick="onSave()">Save</button>
+                    <button class="icon" onclick="onShare()">Share</button>
+                    <select name="font-family" onchange="onChangeFontFamily(this.value)">
+                           <option value="Impact">Impact</option>
+                           <option value="Ariel">Ariel</option>
+                           <option value="Verdana">Verdana</option>
+                           <option value="Helvetica">Helvetica</option>
+                           <option value="Tahoma">Tahoma</option>
+                           <option value="Trebuchet">Trebuchet</option>
+                           <option value="Times New Roman">Times New Roman</option>
+                           <option value="Georgia">Georgia</option>
+                           <option value="Garamond">Garamond</option>
+                           <option value="Courier New">Courier New</option>
+                           <option value="Brush Script MT">Brush Script MT</option>
+                       </select>
+                    <a href="#" class="btn" onclick="downloadImg(this)" download="my-meme.jpg">Download as jpeg</a>
+                </div>
             </div>
-            <div class="editor-tools-container">
-                <input value="Enter Text" type="text" name="textLine" onkeypress="onChangeTxt(event, this.value)">
-                <button class="icon text-add" onclick="onAddText()"></button>
-                <button class="icon switch-lines" onclick="onSwitchLine()"></button>
-                <button class="icon inc-y" onclick="onIncY()">+</button>
-                <button class="icon dec-y" onclick="onDecY()">-</button>
-                <button class="icon trash" onclick="onClear()"></button>
-                <button class="icon align-to-left" onclick="onAlign('left')"></button>
-                <button class="icon align-to-center" onclick="onAlign('center')"></button>
-                <button class="icon align-to-right" onclick="onAlign('right')"></button>
-                <button class="icon inc-font" onclick="onChangeFontSize(5)"></button>
-                <button class="icon dec-font" onclick="onChangeFontSize(-5)"></button>
-                <button class="icon save" onclick="onSave()">Save</button>
-                <select name="font-family" onchange="onChangeFontFamily(this.value)">
-                       <option value="Impact">Impact</option>
-                       <option value="Ariel">Ariel</option>
-                       <option value="Ariel">Ariel</option>
-                       <option value="Verdana">Verdana</option>
-                       <option value="Helvetica">Helvetica</option>
-                       <option value="Tahoma">Tahoma</option>
-                       <option value="Trebuchet">Trebuchet</option>
-                       <option value="Times New Roman">Times New Roman</option>
-                       <option value="Georgia">Georgia</option>
-                       <option value="Garamond">Garamond</option>
-                       <option value="Courier New">Courier New</option>
-                       <option value="Brush Script MT">Brush Script MT</option>
-                   </select>
-                <a href="#" class="btn" onclick="downloadImg(this)" download="my-meme.jpg">Download as jpeg</a>
-            </div>
-        </div>
-    </main>
+        </main>
 
-    <footer></footer>
+        <footer></footer>
+    </div>
 
 
     </div>
     <script src="js/service/storage-service.js"></script>
+    <script src="js/service/upload-service.js"></script>
     <script src="js/service/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
 </body>

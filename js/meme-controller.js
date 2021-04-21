@@ -5,11 +5,12 @@ var gCanvas;
 var gCtx;
 var gStartPos
 const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
-var gCurrLine
+var gCurrLine;
 
 
 
 function onInit() {
+    animateFavicon();
     gCanvas = document.querySelector('#canvas');
     gCtx = gCanvas.getContext('2d');
     createImgs();
@@ -27,33 +28,37 @@ function renderMemes() {
         }).join('') :
 
         getImgsToShow().map((img) => {
-            return ` <img src="${img.imgContent}" class="gallery-meme" onclick="onOpenEditor(${img.meme.selectedImgId},this,'${img.meme.url}',${img.meme})">`
+            return ` <img src="${img.imgContent}" data-meme="${JSON.stringify(img.meme).substring(0,-1)}" class="gallery-meme" onclick="onOpenEditor(${img.meme.selectedImgId},this,'${img.meme.url}')">`
         }).join('')
 }
 
-function onOpenEditor(idx, elImg, url, meme) {
+function onOpenEditor(idx, elImg, url) {
     if (gIsShowSaved) {
-        gMeme = meme
-        renderCanvas();
+        gMeme = JSON.parse(elImg.dataset.meme);
+        var img = new Image()
+        img.onload = renderCanvas.bind()
+        img.src = gMeme.url
+
     } else {
         getCurrMeme().url = url
         getCurrMeme().selectedImgId = idx;
         getCurrMeme().lines = [];
+        getCurrMeme().selectedLineIdx = 0;
     }
     document.querySelector('.meme-editor-container').style.display = 'grid'
+    document.querySelector('.filter-container').style.display = 'none'
     document.querySelector('.memes-container').style.display = 'none'
     drawImgOnCanvas(idx, elImg.height, elImg.width);
 
-    console.log('url', url);
 }
 
 function drawImgOnCanvas(idx, height, width) {
 
     var img = new Image()
-    img.src = getImgs()[idx].url;
+    img.src = getCurrMeme().url;
     img.onload = () => {
-        gCanvas.height = img.height
-        gCanvas.width = img.width
+        gCanvas.height = height * (400 / width)
+        gCanvas.width = 400
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
     }
 
@@ -81,7 +86,7 @@ function drawText(line) {
 }
 
 function renderCanvas() {
-    drawImgOnCanvas(getCurrMeme().selectedImgId, gCanvas.height, gCanvas.width);
+    drawImgOnCanvas(getCurrMeme().url, gCanvas.height, gCanvas.width);
     setTimeout(() => {
         getCurrMeme().lines.forEach(line => drawText(line))
     }, 50);
@@ -123,7 +128,7 @@ function addListeners() {
     addMouseListeners()
     addTouchListeners()
     window.addEventListener('resize', () => {
-        resizeCanvas()
+        // resizeCanvas()
         renderCanvas()
     })
 }
@@ -200,10 +205,9 @@ function downloadImg(elLink) {
     var lines = getCurrMeme().lines
     lines.forEach(line => line.color = 'black')
     renderCanvas()
-    setTimeout(() => {
-        var imgContent = gCanvas.toDataURL('image/jpeg')
-        elLink.href = imgContent
-    }, 1000);
+    var imgContent = gCanvas.toDataURL('image/jpeg')
+    elLink.href = imgContent
+
 }
 
 function onClear() {
@@ -277,6 +281,7 @@ function onSave() {
 
 function onOpenSaved() {
     document.querySelector('.meme-editor-container').style.display = 'none'
+    document.querySelector('.filter-container').style.display = 'none'
     gIsShowSaved = true;
     renderMemes();
 }
@@ -284,7 +289,9 @@ function onOpenSaved() {
 function onOpenGallery() {
     gKeyword = ''
     document.querySelector('.meme-editor-container').style.display = 'none'
+    document.querySelector('.filter-container').style.display = 'flex'
     document.querySelector('.memes-container').style.display = 'block'
+    document.querySelector('input[name=imageUpload]').event = undefined
     gIsShowSaved = false;
     renderMemes();
 }
@@ -295,4 +302,67 @@ function base64_to_jpeg($base64_string, $output_file) {
     fwrite($ifp, base64_decode($data[1]));
     fclose($ifp);
     return $output_file;
+}
+
+function animateFavicon() {
+
+    var favicon_images = [],
+        image_counter = 0; // To keep track of the current image
+    for (var i = 0; i < 88; i++) {
+        favicon_images.push(`img/favicon/frame_${i}_delay-0.25s.gif`)
+    }
+
+
+    setInterval(function() {
+        if (document.querySelector("link[rel='icon']") !== null)
+            document.querySelector("link[rel='icon']").remove();
+        if (document.querySelector("link[rel='shortcut icon']") !== null)
+            document.querySelector("link[rel='shortcut icon']").remove();
+        document.querySelector("head").insertAdjacentHTML('beforeend', '<link rel="icon" href="' + favicon_images[image_counter] + '" type="image/gif">');
+        if (image_counter == favicon_images.length - 1)
+            image_counter = 0;
+        else
+            image_counter++;
+    }, 200);
+}
+
+function onShare() {
+    var file = new File([gCanvas.toDataURL('image/jpeg')], "picture.jpg", { type: 'image/jpeg' });
+    var filesArray = [file];
+    // const filesArray = [gCanvas.toDataURL('image/jpeg')];
+    if (navigator.canShare && navigator.canShare({ files: filesArray })) {
+        var lines = getCurrMeme().lines
+        lines.forEach(line => line.color = 'black')
+        renderCanvas()
+        setTimeout(() => navigator.share({
+            files: filesArray,
+            title: 'Pictures',
+            text: 'Our Pictures.',
+        }), 50)
+
+        .then(() => console.log('Share was successful.'))
+            .catch((error) => console.log('Sharing failed', error));
+    } else {
+        console.log(`Your system doesn't support sharing files.`);
+    }
+}
+
+function onImgInput(ev) {
+    loadImageFromInput(ev)
+
+}
+
+function loadImageFromInput(ev) {
+    debugger
+    var reader = new FileReader()
+
+    reader.onload = function(event) {
+        var img = new Image()
+        img.onload = () => {
+            onOpenEditor(null, null, img.src)
+            renderCanvas()
+        }
+        img.src = event.target.result
+    }
+    reader.readAsDataURL(ev.target.files[0])
 }

@@ -1,4 +1,5 @@
 'use strict'
+var gIsShowSaved = false;
 
 var gKeyword;
 
@@ -12,21 +13,20 @@ var gMeme = {
     lines: []
 }
 
-var gIsShowSaved = false;
 
 function createImgs() {
-    for (var i = 0; i < 19; i++) {
+    for (var i = 0; i < 23; i++) {
         gImgs.push({ id: i + 1, url: `img/meme-imgs/${i+1}.jpg` })
     }
     gImgs[0].keywords = ['politics']
     gImgs[1].keywords = ['cute']
-    gImgs[2].keywords = ['cute']
+    gImgs[2].keywords = ['cute', 'kids']
     gImgs[3].keywords = ['cute', 'funny']
-    gImgs[4].keywords = ['cute', 'funny']
+    gImgs[4].keywords = ['cute', 'funny', 'kids']
     gImgs[5].keywords = ['funny', 'stupid']
-    gImgs[6].keywords = ['stupid', 'funny']
+    gImgs[6].keywords = ['stupid', 'funny', 'kids']
     gImgs[7].keywords = ['funny', 'explain']
-    gImgs[8].keywords = ['cute', 'funny']
+    gImgs[8].keywords = ['cute', 'funny', 'kids']
     gImgs[9].keywords = ['politics', 'funny']
     gImgs[10].keywords = ['fight', 'funny']
     gImgs[11].keywords = ['you']
@@ -37,6 +37,10 @@ function createImgs() {
     gImgs[16].keywords = ['explain', 'serious', 'politics']
     gImgs[17].keywords = ['funny', 'explain']
     gImgs[18].keywords = ['cute']
+    gImgs[19].keywords = ['devil']
+    gImgs[20].keywords = ['kids']
+    gImgs[21].keywords = ['happy']
+    gImgs[22].keywords = ['mad']
 
     createKeywordsMap();
 
@@ -80,7 +84,6 @@ function createKeywordsMap() {
             if (!keywordsMap[keyword]) keywordsMap[keyword] = 1;
         });
     });
-    console.log('keywordsMap', keywordsMap);
     gKeywords = keywordsMap;
 }
 
@@ -93,7 +96,6 @@ function getImgsToShow() {
         if (!gKeyword || gKeyword.length === 0) return gImgs;
         return gImgs.filter(img => {
             return img.keywords.some(keyword => {
-                console.log(keyword.substring(0, gKeyword.length) === gKeyword)
                 return keyword.substring(0, gKeyword.length) === gKeyword;
             });
         })
