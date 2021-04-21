@@ -71,7 +71,8 @@ function addNewLine(txt = 'Add Text Here', x = gCanvas.width / 2, y, size = gCan
         isDragging: false,
         pos: { x, y },
         fontFam: 'Impact',
-        color: gCurrColor
+        color: gCurrColor,
+        lastStrokeColor: strokeColor
 
     })
     var length = gMeme.lines.length;
@@ -132,4 +133,29 @@ function saveImg() {
 
 function setFontColor(color) {
     gCurrColor = color;
+}
+
+function setStroke() {
+    var color = (gCurrLine.strokeColor === 'red') ? gCurrLine.lastStrokeColor : gCurrLine.strokeColor;
+    console.log(color)
+    if (color === 'black')
+        gCurrLine.strokeColor = 'transparent'
+    else gCurrLine.strokeColor = 'black'
+    gCurrLine.lastStrokeColor = gCurrLine.strokeColor;
+}
+
+function setCurrLineX(align) {
+    var txtWidth = gCurrLine.txt.length * 20
+
+    switch (align) {
+        case 'right':
+            gCurrLine.pos.x = gCanvas.width - txtWidth / 2
+            break;
+        case 'left':
+            gCurrLine.pos.x = 0 + txtWidth / 2
+            break;
+        case 'center':
+            gCurrLine.pos.x = gCanvas.width / 2
+            break;
+    }
 }

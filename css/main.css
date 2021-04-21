@@ -200,73 +200,6 @@ body {
     padding: 20px;
 }
 
-@media screen and (min-width: 852px) {
-    .canvas-container {
-        margin: 10px;
-        flex: 1;
-        grid-area: canvas-container;
-    }
-    .keywords-container {
-        padding-bottom: 0;
-    }
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        padding-bottom: 0;
-        height: 70px;
-        align-items: center;
-    }
-    .main-nav {
-        display: flex;
-        margin-right: 30px;
-        flex-direction: row;
-        justify-content: flex-end;
-    }
-    .main-nav li {
-        margin: 0;
-    }
-    .nav-links {
-        margin-left: 40px;
-    }
-    .logo {
-        margin-top: 0;
-    }
-    .navbar-toggle {
-        display: none;
-    }
-    .logo:hover,
-    .nav-links:hover {
-        color: rgba(255, 255, 255, 1);
-    }
-    .filter-container {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    input[name=search]:focus {
-        width: 20%;
-    }
-    /* .meme-editor-container {
-        display: none;
-        gap: 30px 0px;
-        grid-template-areas: ". . . . . . . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . . . . . . . . ."
-    } */
-    .meme-editor-container {
-        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
-        grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
-        grid-gap: 0;
-        grid-template-areas: ". . . . . . . . . ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". . . . . . . . . ." ". . . . . . . . . ." ". . . . . . . . . .";
-    }
-    .editor-tools-container {
-        grid-area: editor-container;
-        flex: 1;
-        display: grid;
-        grid-template-columns: 1% 30% 30% 30% 29% 0% 1%;
-        grid-template-rows: 15% 15% 15% 15% 15% 15% 1%;
-        gap: 30px 0px;
-        grid-template-areas: ". text-input text-input text-input text-input text-input ." ". . switch-btn add-line-btn clear-canvas-btn . ." ". inc-font-size-btn dec-font-size-btn align-left-btn align-center-btn align-right-btn ." ". change-font-input change-font-input change-font-input change-border-btn change-font-color-btn ." ". stickers-container stickers-container stickers-container stickers-container stickers-container ." ". download-canvas download-canvas share-canvas share-canvas facebook-btn ." ". . . save-btn . . .";
-    }
-}
-
 input[name=search] {
     display: inline;
     width: 130px;
@@ -408,6 +341,7 @@ input:focus+label {
 
 .change-border-btn {
     grid-area: change-border-btn;
+    background-image: url('../img/icons/text\ stroke.png');
 }
 
 .change-font-color-btn {
@@ -418,7 +352,7 @@ input:focus+label {
     grid-area: stickers-container;
     background-color: rgba(255, 255, 255, 0.616);
     height: 60px;
-    width: 100%;
+    width: 120%;
 }
 
 .download-canvas {
@@ -460,4 +394,74 @@ input:focus+label {
 
 .sticker {
     font-size: 40px;
+}
+
+@media screen and (min-width: 852px) {
+    .canvas-container {
+        margin: 10px;
+        flex: 1;
+        grid-area: canvas-container;
+    }
+    .keywords-container {
+        padding-bottom: 0;
+    }
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 0;
+        height: 70px;
+        align-items: center;
+    }
+    .main-nav {
+        display: flex;
+        margin-right: 30px;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    .main-nav li {
+        margin: 0;
+    }
+    .nav-links {
+        margin-left: 40px;
+    }
+    .logo {
+        margin-top: 0;
+    }
+    .navbar-toggle {
+        display: none;
+    }
+    .logo:hover,
+    .nav-links:hover {
+        color: rgba(255, 255, 255, 1);
+    }
+    .filter-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    input[name=search]:focus {
+        width: 20%;
+    }
+    /* .meme-editor-container {
+        display: none;
+        gap: 30px 0px;
+        grid-template-areas: ". . . . . . . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . canvas-container canvas-container canvas-container canvas-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . editor-container editor-container editor-container editor-container . . . ." ". . . . . . . . . ."
+    } */
+    .meme-editor-container {
+        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+        grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+        grid-gap: 0;
+        grid-template-areas: ". . . . . . . . . ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". canvas-container canvas-container canvas-container canvas-container . editor-container editor-container editor-container ." ". . . . . . . . . ." ". . . . . . . . . ." ". . . . . . . . . .";
+    }
+    .editor-tools-container {
+        grid-area: editor-container;
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1% 30% 30% 30% 29% 0% 1%;
+        grid-template-rows: 15% 15% 15% 15% 15% 15% 1%;
+        gap: 30px 0px;
+        grid-template-areas: ". text-input text-input text-input text-input text-input ." ". . switch-btn add-line-btn clear-canvas-btn . ." ". inc-font-size-btn dec-font-size-btn align-left-btn align-center-btn align-right-btn ." ". change-font-input change-font-input change-font-input change-border-btn change-font-color-btn ." ". stickers-container stickers-container stickers-container stickers-container stickers-container ." ". download-canvas download-canvas share-canvas share-canvas facebook-btn save-btn" ". . . . . . .";
+    }
+    .stickers-container {
+        width: 120%;
+    }
 }

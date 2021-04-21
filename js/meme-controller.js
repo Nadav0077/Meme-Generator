@@ -104,7 +104,7 @@ function currLine() {
             line.StrokeColor = 'red';
             gCurrLine = line
             document.querySelector('input[name=textLine]').value = line.txt;
-        } else line.StrokeColor = 'black';
+        } else line.StrokeColor = line.lastStrokeColor;
     })
     renderCanvas()
 }
@@ -223,7 +223,8 @@ function onClear() {
 }
 
 function onAlign(align) {
-    gCurrLine.align = align
+    setCurrLineX(align)
+
     renderCanvas();
 }
 
@@ -294,24 +295,9 @@ function onOpenSaved() {
 }
 
 function onOpenGallery() {
-    // window.location(ur)
-    // gKeyword = ''
-    // document.querySelector('.meme-editor-container').style.display = 'none'
-    // document.querySelector('.filter-container').style.display = 'flex'
-    // document.querySelector('.memes-container').style.display = 'block'
-    // document.querySelector('input[name=imageUpload]').event = undefined
-    // gIsShowSaved = false;
     location.reload();
-    // renderMemes();
 }
 
-function base64_to_jpeg($base64_string, $output_file) {
-    $ifp = fopen($output_file, 'wb');
-    $data = explode(',', $base64_string);
-    fwrite($ifp, base64_decode($data[1]));
-    fclose($ifp);
-    return $output_file;
-}
 
 function animateFavicon() {
 
@@ -418,4 +404,8 @@ function onChangeFontColor(color) {
     console.log(color)
     setFontColor(color)
     renderCanvas();
+}
+
+function onChangeStroke() {
+    setStroke();
 }
