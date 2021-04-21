@@ -374,16 +374,17 @@ function loadImageFromInput(ev) {
 
 function downloadFonts() {
     var el = document.querySelector('.font-download');
-    el.style.font = `0px Brush Script MT`
-    el.style.font = `0px Courier New`
-    el.style.font = `0px Garamond`
-    el.style.font = `0px Georgia`
-    el.style.font = `0px Times New Roman`
-    el.style.font = `0px Trebuchet`
-    el.style.font = `0px Tahoma`
-    el.style.font = `0px Helvetica`
-    el.style.font = `0px Verdana`
-    el.style.font = `0px Ariel`
-    el.style.font = `0px Impact`
+    el.style.fontFamily = `Brush Script MT`
+    el.style.font = `Courier New`
+    el.style.font = `Garamond`
+    el.style.font = `Georgia`
+    el.style.font = `Times New Roman`
+    el.style.font = `Trebuchet`
+    el.style.font = `Tahoma`
+    el.style.font = `Helvetica`
+    el.style.font = `Verdana`
+    el.style.font = `Ariel`
+    el.style.fontFamily = `Impact`
+    console.log(el.style.fontFamily)
 
 }
