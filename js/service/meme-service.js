@@ -1,7 +1,7 @@
 'use strict'
 var gIsShowSaved = false;
 var gCurrColor = '#FFFFFF'
-
+var gCurrSavedMemeIdx;
 
 const KEYwords = 'savedKeywords'
 const KEYmemes = 'savedMemes'
@@ -80,6 +80,8 @@ function addNewLine(txt = 'Add Text Here', x = gCanvas.width / 2, y, size = gCan
     else if (gMeme.lines.length === 2) gMeme.lines[length - 1].pos.y = gCanvas.height - gCanvas.height / 6
     else if (gMeme.lines.length === 3) gMeme.lines[length - 1].pos.y = gCanvas.height / 2
     else gMeme.lines[length - 1].pos.y = gMeme.lines[length - 2].pos.y + size;
+
+    gCurrLine = gMeme.lines[gMeme.lines.length - 1]
 }
 
 function getCurrLine() {
@@ -126,6 +128,7 @@ function incKeyWord(keyword) {
 }
 
 function saveImg() {
+    if (gIsShowSaved) gSavedMemes.splice(gCurrSavedMemeIdx, 1)
     var imgContent = gCanvas.toDataURL('image/jpeg')
     gSavedMemes.push({ meme: gMeme, imgContent })
     saveToStorage(KEYmemes, gSavedMemes)
@@ -158,4 +161,12 @@ function setCurrLineX(align) {
             gCurrLine.pos.x = gCanvas.width / 2
             break;
     }
+}
+
+function getSavedMemes() {
+    return gSavedMemes;
+}
+
+function setCurrSavedMemeIdx(idx) {
+    gCurrSavedMemeIdx = idx;
 }

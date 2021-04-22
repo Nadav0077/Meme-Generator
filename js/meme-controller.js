@@ -31,21 +31,19 @@ function renderMemes() {
             return ` <img src="${img.url}" class="gallery-meme" onclick="onOpenEditor(${img.id-1},this,'${img.url}')">`
         }).join('') :
 
-        getImgsToShow().map((img) => {
-            console.log(JSON.stringify(img.meme))
-            return ` <img src="${img.imgContent}" class="gallery-meme" onclick='onOpenEditor(${img.meme.selectedImgId},this,'${img.meme.url}',${JSON.stringify(img.meme)})'>`
+        getImgsToShow().map((img, savedMemeId) => {
+            return ` <img src="${img.imgContent}" class="gallery-meme" onclick="onOpenEditor(${img.meme.selectedImgId},this,'${img.meme.url}',${savedMemeId})">`
         }).join('')
 }
 
-function onOpenEditor(idx, elImg, url, meme) {
+function onOpenEditor(idx, elImg, url, savedMemeId) {
+    debugger
     console.log(elImg)
     renderStickers();
     if (gIsShowSaved) {
-        gMeme = JSON.parse(meme.meme);
-        console.log(gMeme)
-        var img = new Image()
-        img.onload = renderCanvas()
-        img.src = gMeme.url
+        gMeme = getSavedMemes()[savedMemeId].meme
+        getCurrMeme().selectedLineIdx = 0;
+        setCurrSavedMemeIdx(savedMemeId)
 
     } else {
         getCurrMeme().url = url
@@ -57,7 +55,8 @@ function onOpenEditor(idx, elImg, url, meme) {
     document.querySelector('.filter-container').style.display = 'none'
     document.querySelector('.memes-container').style.display = 'none'
     drawImgOnCanvas(idx, elImg.height, elImg.width);
-
+    onSwitchLine()
+    renderCanvas();
 }
 
 function drawImgOnCanvas(idx, height, width) {
@@ -75,8 +74,8 @@ function drawImgOnCanvas(idx, height, width) {
 function onAddText() {
     var text = (gIsInputSticker) ? gCurrSticker : document.querySelector('input[name=textLine]').value;
     addNewLine(text)
-    gCurrLine = getCurrMeme().lines[getCurrMeme().lines.length - 1]
-    drawText(gCurrLine);
+
+    drawText(getCurrLine());
     onSwitchLine();
 }
 
@@ -91,12 +90,17 @@ function drawText(line) {
     gCtx.textAlign = line.align
     gCtx.fillText(text, line.pos.x, line.pos.y)
     gCtx.strokeText(text, line.pos.x, line.pos.y)
+    console.log(line)
 }
 
 function renderCanvas() {
     drawImgOnCanvas(getCurrMeme().url, gCanvas.height, gCanvas.width);
     setTimeout(() => {
-        getCurrMeme().lines.forEach(line => drawText(line))
+
+        getCurrMeme().lines.forEach(line => {
+            drawText(line)
+            console.log(line)
+        })
     }, 50);
 
 }
