@@ -241,12 +241,12 @@ function onChangeFontFamily(fontFam) {
 }
 
 function onChangeTxt(ev, txt) {
-    if (ev.code === 'Enter') {
-        if (txt === '' || !txt) {
-            removeLine();
-            currLine();
-        } else gCurrLine.txt = txt;
-    }
+    console.log(txt)
+    if (txt === '' || !txt) {
+        removeLine();
+        currLine();
+    } else gCurrLine.txt = txt;
+
     renderCanvas();
 }
 

@@ -61,7 +61,7 @@
                     <canvas id="canvas" height="200" width="200" style="border: 1px solid black;"></canvas>
                 </div>
                 <div class="editor-tools-container">
-                    <input class="text-input" value="Enter Text" type="text" name="textLine" onkeypress="onChangeTxt(event, this.value)">
+                    <input class="text-input" value="Enter Text" type="text" name="textLine" onkeyup="onChangeTxt(event, this.value)">
                     <button class="icon add-line-btn text-add" onclick="onAddText()"></button>
                     <button class="icon switch-btn switch-lines" onclick="onSwitchLine()"></button>
                     <!-- <button class="icon inc-y " onclick="onIncY()">+</button>

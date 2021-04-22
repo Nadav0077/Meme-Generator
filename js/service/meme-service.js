@@ -128,9 +128,9 @@ function incKeyWord(keyword) {
 }
 
 function saveImg() {
-    if (gIsShowSaved) gSavedMemes.splice(gCurrSavedMemeIdx, 1)
     var imgContent = gCanvas.toDataURL('image/jpeg')
-    gSavedMemes.push({ meme: gMeme, imgContent })
+    if (gIsShowSaved) gSavedMemes.splice(gCurrSavedMemeIdx, 1, { meme: gMeme, imgContent })
+    else gSavedMemes.push({ meme: gMeme, imgContent })
     saveToStorage(KEYmemes, gSavedMemes)
 }
 
