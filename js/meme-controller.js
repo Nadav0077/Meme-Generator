@@ -10,7 +10,6 @@ var gIsInputSticker = false;
 var gCurrSticker;
 
 
-
 function onInit() {
     navBar();
     downloadFonts()
@@ -37,8 +36,6 @@ function renderMemes() {
 }
 
 function onOpenEditor(idx, elImg, url, savedMemeId) {
-    debugger
-    console.log(elImg)
     renderStickers();
     if (gIsShowSaved) {
         gMeme = getSavedMemes()[savedMemeId].meme
@@ -52,6 +49,7 @@ function onOpenEditor(idx, elImg, url, savedMemeId) {
         getCurrMeme().selectedLineIdx = 0;
     }
     document.querySelector('.meme-editor-container').style.display = 'grid'
+    document.querySelector('.editor-full-container').style.display = 'flex'
     document.querySelector('.filter-container').style.display = 'none'
     document.querySelector('.memes-container').style.display = 'none'
     drawImgOnCanvas(idx, elImg.height, elImg.width);
@@ -64,8 +62,13 @@ function drawImgOnCanvas(idx, height, width) {
     var img = new Image()
     img.src = getCurrMeme().url;
     img.onload = () => {
-        gCanvas.height = height * (400 / width)
-        gCanvas.width = 400
+        if (height > width) {
+            gCanvas.height = height * (400 / height)
+            gCanvas.width = 400;
+        } else {
+            gCanvas.height = 400
+            gCanvas.width = width * (400 / width);
+        }
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
     }
 
@@ -90,7 +93,6 @@ function drawText(line) {
     gCtx.textAlign = line.align
     gCtx.fillText(text, line.pos.x, line.pos.y)
     gCtx.strokeText(text, line.pos.x, line.pos.y)
-    console.log(line)
 }
 
 function renderCanvas() {
@@ -99,7 +101,6 @@ function renderCanvas() {
 
         getCurrMeme().lines.forEach(line => {
             drawText(line)
-            console.log(line)
         })
     }, 50);
 
@@ -241,11 +242,10 @@ function onChangeFontFamily(fontFam) {
 }
 
 function onChangeTxt(ev, txt) {
-    console.log(txt)
     if (txt === '' || !txt) {
-        removeLine();
         currLine();
-    } else gCurrLine.txt = txt;
+    }
+    gCurrLine.txt = txt;
 
     renderCanvas();
 }
@@ -325,24 +325,27 @@ function animateFavicon() {
     }, 200);
 }
 
+//not working :(
 function onShare() {
-    var file = new File([gCanvas.toDataURL('image/jpeg')], "picture.jpg", { type: 'image/jpeg' });
+    var pic = gCanvas.toDataURL('image/jpeg', 1.0)
+
+    var file = new File([pic], "picture.jpg", { type: 'image/jpeg' });
     var filesArray = [file];
     if (navigator.canShare && navigator.canShare({ files: filesArray })) {
-        var lines = getCurrMeme().lines
-        lines.forEach(line => line.StrokeColor = 'black')
-        renderCanvas()
-        setTimeout(() => navigator.share({
+        navigator.share({
+            text: 'Our Pictures.',
             files: filesArray,
             title: 'Pictures',
-            text: 'Our Pictures.',
-        }), 50)
+            url: 'picture.jpg'
+        })
 
         .then(() => console.log('Share was successful.'))
             .catch((error) => console.log('Sharing failed', error));
     } else {
         console.log(`Your system doesn't support sharing files.`);
     }
+
+
 }
 
 function onImgInput(ev) {
@@ -377,7 +380,6 @@ function downloadFonts() {
     el.style.font = `Verdana`
     el.style.font = `Ariel`
     el.style.fontFamily = `Impact`
-    console.log(el.style.fontFamily)
 
 }
 
@@ -391,7 +393,6 @@ function renderStickers() {
 }
 
 function onAddSticker(sticker) {
-    console.log(sticker)
     gIsInputSticker = true
     gCurrSticker = sticker
     onAddText();
@@ -404,7 +405,6 @@ function onChangeStickersToShow(num) {
 }
 
 function onChangeFontColor(color) {
-    console.log(color)
     setFontColor(color)
     renderCanvas();
 }

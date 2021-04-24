@@ -1,4 +1,3 @@
-
 // on submit call to this function
 function uploadImg(elForm, ev) {
     ev.preventDefault();
@@ -20,18 +19,14 @@ function doUploadImg(elForm, onSuccess) {
     var formData = new FormData(elForm);
     console.log('doUploadImg -> formData', formData)
     fetch('//ca-upload.com/here/upload.php', {
-        method: 'POST',
-        body: formData
-    })
-        .then(function (res) {
+            method: 'POST',
+            body: formData
+        })
+        .then(function(res) {
             return res.text()
         })
         .then(onSuccess)
-        .catch(function (err) {
+        .catch(function(err) {
             console.error(err)
         })
 }
-
-
-
-
