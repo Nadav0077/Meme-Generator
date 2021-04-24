@@ -135,7 +135,7 @@ function saveImg() {
 }
 
 function setFontColor(color) {
-    gCurrColor = color;
+    gCurrLine.color = color
 }
 
 function setStroke() {
